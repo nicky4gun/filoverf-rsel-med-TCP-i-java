@@ -59,18 +59,12 @@ Hvorfor?
 
  
 
-| Test | Resultat | 
-
-|---|---| 
-
-| Normal fil | | 
-
-| Stor fil | | 
-
-| Ukendt fil | | 
-
-| ../hemmelig.txt | | 
-
+| Test | Resultat |
+|---|---|
+| Normal fil | |
+| Stor fil | |
+| Ukendt fil | |
+| ../hemmelig.txt | |
 | Server ikke startet | | 
 
  
@@ -101,18 +95,18 @@ Hvad valgte vi eventuelt ikke at ændre – og hvorfor?
 
 3. Hvordan kontrollerede I, at AI-genereret kode faktisk virkede?
 
-   ### trin 1
-   Hvad er serverens ansvar?
-   serverens anvar er at lytte efter andmodeninger fra klienter
+### Trin 1 - Forstå opgaven
+Hvad er serverens ansvar?
+- Serverens ansvar er at lytte efter andmodeninger fra klienter
 
 Hvad er klientens ansvar?  
-klientens ansvar er at sende  anmodening ud til serverne
+- Klientens ansvar er at sende anmodening ud til serverne
 
 Hvad sendes som tekst?  
-Comandoen 
+- Kommandoen 
 
 Hvad sendes som bytes? 
-filen 
+- Filen 
 
 Hvornår afsluttes forbindelsen? 
-der afsluttes forbindelse når clienten har modtaget  sin anmodning 
+- Der afsluttes forbindelse når clienten har modtaget  sin anmodning 
