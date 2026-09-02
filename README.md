@@ -99,4 +99,20 @@ Hvad valgte vi eventuelt ikke at ændre – og hvorfor?
 
 2. Hvornår skulle I være kritiske over for AI? 
 
-3. Hvordan kontrollerede I, at AI-genereret kode faktisk virkede? 
+3. Hvordan kontrollerede I, at AI-genereret kode faktisk virkede?
+
+   ### trin 1
+   Hvad er serverens ansvar?
+   serverens anvar er at lytte efter andmodeninger fra klienter
+
+Hvad er klientens ansvar?  
+klientens ansvar er at sende  anmodening ud til serverne
+
+Hvad sendes som tekst?  
+Comandoen 
+
+Hvad sendes som bytes? 
+filen 
+
+Hvornår afsluttes forbindelsen? 
+der afsluttes forbindelse når clienten har modtaget  sin anmodning 
