@@ -24,11 +24,13 @@ Beskriv kort FileClient, FileServer og protokollen.
  
 
 Hvad foreslog AI? 
-
- 
+den gav os en plan for hvordan vi skulle lave vores filoverførselsprogram, med forslag til hvordan vi kunne implementere klienten og serveren, samt hvordan protokollen skulle se ud.
+den foreslog også at vi skulle lave en testplan, og hvordan vi kunne teste vores program.
+og filserver og filclient skulle implementeres i java, og at vi skulle bruge TCP til at sende filer mellem klienten og serveren.
+samt StreamReader og StreamWriter til at læse og skrive filer. og nogen feijlhåndtering, og at vi skulle bruge en buffer til at sende filen i mindre bidder.
 
 Hvad ændrede I selv i planen? 
-
+vi droppet intejgrations test og simpelifiseret dens forslag så det var nemmer at forstå da den gav os en lang liste med mange flere trin 
  
 
 ### Implementering 
