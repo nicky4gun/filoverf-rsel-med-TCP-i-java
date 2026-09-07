@@ -1,19 +1,17 @@
 package filoverforsel;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
-public class TcpClient {
+public class FileClient {
     private static final String HOST = "localhost";
     private static final int PORT = 5000;
+
+    public static void main(String[] args) {
+        FileClient client = new FileClient();
+        client.sendRequest();
+    }
 
     public Socket connectToServer() {
         try {
@@ -27,22 +25,30 @@ public class TcpClient {
         }
     }
 
-    public void sendRequest(String fileName) {
+    public void sendRequest() {
         Socket socket = connectToServer();
+
         if (socket == null) {
             return;
         }
 
-        try (Socket ignored = socket;
-             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-             InputStream inputStream = socket.getInputStream()) {
+        try (socket;
+             InputStream inputStream = socket.getInputStream();
+             BufferedReader reader = new BufferedReader(
+                     new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+             PrintWriter writer = new PrintWriter(
+                     new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
+             BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in))) {
+
+            System.out.print("Indtast filnavn e.g. test.txt: ");
+            String fileName = keyboard.readLine().trim();
 
             String request = "GET|" + fileName;
             writer.println(request);
-            System.out.println("FileClient sender request: " + request);
+            System.out.println("Sendt request: " + request);
 
-            String response = readLine(inputStream);
-            System.out.println("FileClient modtog respons: " + response);
+            String response = reader.readLine();
+            System.out.println("Server: " + response);
 
             if (response == null) {
                 return;
@@ -78,29 +84,5 @@ public class TcpClient {
         }
 
         System.out.println("Fil gemt lokalt: " + outputFile.getAbsolutePath());
-    }
-
-    private String readLine(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        int nextByte;
-        while ((nextByte = inputStream.read()) != -1) {
-            if (nextByte == '\n') {
-                break;
-            }
-            if (nextByte != '\r') {
-                buffer.write(nextByte);
-            }
-        }
-
-        if (buffer.size() == 0 && nextByte == -1) {
-            return null;
-        }
-
-        return buffer.toString(StandardCharsets.UTF_8);
-    }
-
-    public static void main(String[] args) {
-        TcpClient client = new TcpClient();
-        client.sendRequest("test.txt");
     }
 }
