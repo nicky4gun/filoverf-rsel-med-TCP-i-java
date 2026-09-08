@@ -3,7 +3,6 @@ package filoverforsel;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 
 public class FileServer {
     private static final int PORT = 5000;
@@ -32,48 +31,49 @@ public class FileServer {
     private void handleClient(Socket clientSocket) throws IOException {
         System.out.println("Forbindelse modtaget fra " + clientSocket.getInetAddress());
 
-        try (DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
-             DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream())) {
+        try (DataInputStream input = new DataInputStream(clientSocket.getInputStream());
+             DataOutputStream output = new DataOutputStream(clientSocket.getOutputStream())) {
 
-            String request = dis.readUTF();
+            String request = input.readUTF();
             System.out.println("Modtaget request: " + request);
 
             String fileName = parseFileName(request);
             if (fileName == null || fileName.isBlank()) {
-                sendError(dos, "Ugyldigt format. Brug GET|<filnavn>");
+                sendError(output, "Ugyldigt format. Brug GET|<filnavn>");
                 return;
             }
 
             if (fileName.contains("../") || fileName.startsWith("/") || fileName.contains("\\")) {
-                sendError(dos, "Ugyldigt filnavn");
+                sendError(output, "Ugyldigt filnavn");
                 return;
             }
 
             File file = new File(fileName);
             if (!file.exists() || !file.isFile()) {
-                sendError(dos, "Filen findes ikke");
+                sendError(output, "Filen findes ikke");
                 return;
             }
 
-            long fileSize = sendFile(file, dos, clientSocket.getOutputStream());
+            long fileSize = SendFile(file, output);
             System.out.println("Fil sendt: " + fileName + " (" + fileSize + " bytes)");
         }
     }
 
-    private long sendFile(File file, DataOutputStream dos, OutputStream outputStream) throws IOException {
+    private long SendFile(File file, DataOutputStream output) throws IOException {
         long fileSize = file.length();
-        // send header reliably as UTF
-        dos.writeUTF("OK|" + fileSize);
-        dos.flush();
+
+        output.writeUTF("OK|" + fileSize);
+        output.flush();
 
         try (BufferedInputStream fileInputStream = new BufferedInputStream(new FileInputStream(file))) {
             byte[] buffer = new byte[4096];
             int bytesRead;
             while ((bytesRead = fileInputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
+                output.write(buffer, 0, bytesRead);
             }
-            outputStream.flush();
+            output.flush();
         }
+
         return fileSize;
     }
 
@@ -88,13 +88,8 @@ public class FileServer {
         return parts[1].trim();
     }
 
-    private void sendError(DataOutputStream dos, String message) throws IOException {
-        dos.writeUTF("ERROR|" + message);
-        dos.flush();
-    }
-
-    // Backwards-compatible helper if PrintWriter was used elsewhere
-    private void sendError(PrintWriter writer, String message) {
-        writer.println("ERROR|" + message);
+    private void sendError(DataOutputStream output, String message) throws IOException {
+        output.writeUTF("ERROR|" + message);
+        output.flush();
     }
 }

@@ -33,19 +33,19 @@ public class FileClient {
         }
 
         try (socket;
-             DataInputStream dis = new DataInputStream(socket.getInputStream());
-             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+             DataInputStream input = new DataInputStream(socket.getInputStream());
+             DataOutputStream output = new DataOutputStream(socket.getOutputStream());
              BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8))) {
 
             System.out.print("Indtast filnavn e.g. test.txt: ");
             String fileName = keyboard.readLine().trim();
 
             String request = "GET|" + fileName;
-            dos.writeUTF(request);
-            dos.flush();
+            output.writeUTF(request);
+            output.flush();
             System.out.println("Sendt request: " + request);
 
-            String response = dis.readUTF();
+            String response = input.readUTF();
             System.out.println("Server: " + response);
 
             if (response == null) {
