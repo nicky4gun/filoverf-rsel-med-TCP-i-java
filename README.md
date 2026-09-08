@@ -11,50 +11,50 @@ Navne: Jannik, Nicklas Stage
 
  
 
-Beskriv kort FileClient, FileServer og protokollen. 
+Beskriv kort FileClient og FileServer. 
 
-## fileclient 
-prøver at finde en fil  
-gemmer filen i downloades 
-### består af connectToserver, sendRequest, saveReceivedFile 
+## FileClient 
+Prøver at finde en fil  
+Gemmer filen i downloades 
+### Består af connectToserver, sendRequest, saveReceivedFile 
 
-## connectToServer 
-clienten prøver at connect to sever ved at lave en ny Socket som består af en HOST og en PORT 
+### connectToServer 
+Klienten prøver at connect to sever ved at lave en ny Socket som består af en HOST og en PORT 
 den har en time out  til hvis serveren ikke er oppe 
 efter for teller den at den har forbundet til HOST og PORT
 og returner socket 
 
-## sendRequest
-clienten sender en filnavn til serveren med navent på filen 
+### sendRequest
+Klienten sender en filnavn til serveren med navent på filen 
 som sender en request  
 og får en response 
 
-## saveReceivedFile
-filen bliver sat i mappen der hedder downloade 
-vis den download mappe ikke findes så opretter den en downloade mappe 
+### saveReceivedFile
+Filen bliver sat i mappen der hedder downloads. 
+Hvis den download mappe ikke findes så opretter den en downloade mappe. 
 
 
-## fileserver 
-leder efter denne fil 
-sender filen til clienten 
+## FileServer 
+Leder efter denne fil  
+Sender filen til Klienten 
 
-### består af handleClient, sendFile, parseFileName, sendError 
+### Består af handleClient, sendFile, parseFileName, sendError 
  
-## handleClient
-modtager filnavnet 
-valider filnavet  
+### handleClient
+- Modtager filnavnet 
+- Validere filnavet
 
-## sendFile
-sender file til clienten med angivet størrelse på filen 
+### sendFile
+Den sender file til clienten med angivet størrelse på filen 
 
 
-## parseFileName
+### parseFileName
 
-tjekker om filnavnet mangler sender den tilbage null vis blank eller null 
-tjekker om den har GET og  length 
+Tjekker om filnavnet mangler sender den tilbage null vis blank eller null  
+Tjekker om den har GET og dens length 
 
-## sendError
-sender en error message 
+### sendError
+Sender en error message ved fejl
 
 
 ## AI-agent 
