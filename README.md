@@ -42,7 +42,8 @@ Vi droppet intejgrations test og simpelifiseret dens forslag så det var nemmer 
 
 Hvor hjalp Agent jer mest? 
 
- 
+ tids messigt var AI helt klart en god hjelp 
+den var også god til at komme med en forsklaring af hvad Ai ville lave i hvært bullet point 
 
 ### Kritisk vurdering 
 
