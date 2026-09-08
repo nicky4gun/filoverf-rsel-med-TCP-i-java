@@ -13,7 +13,49 @@ Navne: Jannik, Nicklas Stage
 
 Beskriv kort FileClient, FileServer og protokollen. 
 
+## fileclient 
+prøver at finde en fil  
+gemmer filen i downloades 
+### består af connectToserver, sendRequest, saveReceivedFile 
+
+## connectToServer 
+clienten prøver at connect to sever ved at lave en ny Socket som består af en HOST og en PORT 
+den har en time out  til hvis serveren ikke er oppe 
+efter for teller den at den har forbundet til HOST og PORT
+og returner socket 
+
+## sendRequest
+clienten sender en filnavn til serveren med navent på filen 
+som sender en request  
+og får en response 
+
+## saveReceivedFile
+filen bliver sat i mappen der hedder downloade 
+vis den download mappe ikke findes så opretter den en downloade mappe 
+
+
+## fileserver 
+leder efter denne fil 
+sender filen til clienten 
+
+### består af handleClient, sendFile, parseFileName, sendError 
  
+## handleClient
+modtager filnavnet 
+valider filnavet  
+
+## sendFile
+sender file til clienten med angivet størrelse på filen 
+
+
+## parseFileName
+
+tjekker om filnavnet mangler sender den tilbage null vis blank eller null 
+tjekker om den har GET og  length 
+
+## sendError
+sender en error message 
+
 
 ## AI-agent 
 
