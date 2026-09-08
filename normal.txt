@@ -1,0 +1,2 @@
+Dette er en normal testfil.
+Den bruges til at kontrollere, at en fil overføres korrekt.
