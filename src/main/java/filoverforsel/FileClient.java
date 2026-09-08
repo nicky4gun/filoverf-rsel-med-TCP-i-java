@@ -33,21 +33,19 @@ public class FileClient {
         }
 
         try (socket;
-             InputStream inputStream = socket.getInputStream();
-             BufferedReader reader = new BufferedReader(
-                     new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-             PrintWriter writer = new PrintWriter(
-                     new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
-             BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in))) {
+             DataInputStream dis = new DataInputStream(socket.getInputStream());
+             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+             BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8))) {
 
             System.out.print("Indtast filnavn e.g. test.txt: ");
             String fileName = keyboard.readLine().trim();
 
             String request = "GET|" + fileName;
-            writer.println(request);
+            dos.writeUTF(request);
+            dos.flush();
             System.out.println("Sendt request: " + request);
 
-            String response = reader.readLine();
+            String response = dis.readUTF();
             System.out.println("Server: " + response);
 
             if (response == null) {
@@ -56,7 +54,8 @@ public class FileClient {
 
             String[] parts = response.split("\\|", 2);
             if (parts.length == 2 && "OK".equalsIgnoreCase(parts[0])) {
-                saveReceivedFile(fileName, inputStream);
+                long fileSize = Long.parseLong(parts[1]);
+                saveReceivedFile(fileName, socket.getInputStream(), fileSize);
             } else if (parts.length == 2 && "ERROR".equalsIgnoreCase(parts[0])) {
                 System.out.println("Serverfejl: " + parts[1]);
             } else {
@@ -67,7 +66,7 @@ public class FileClient {
         }
     }
 
-    private void saveReceivedFile(String fileName, InputStream inputStream) throws IOException {
+    private void saveReceivedFile(String fileName, InputStream inputStream, long fileSize) throws IOException {
         File downloadsDir = new File("downloads");
         if (!downloadsDir.exists()) {
             downloadsDir.mkdirs();
@@ -76,9 +75,13 @@ public class FileClient {
         File outputFile = new File(downloadsDir, fileName);
         try (OutputStream fileOutputStream = new FileOutputStream(outputFile)) {
             byte[] buffer = new byte[4096];
-            int bytesRead;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
+            long remaining = fileSize;
+            while (remaining > 0) {
+                int toRead = (int) Math.min(buffer.length, remaining);
+                int bytesRead = inputStream.read(buffer, 0, toRead);
+                if (bytesRead == -1) throw new EOFException("Uventet slut på strømmen");
                 fileOutputStream.write(buffer, 0, bytesRead);
+                remaining -= bytesRead;
             }
             fileOutputStream.flush();
         }
