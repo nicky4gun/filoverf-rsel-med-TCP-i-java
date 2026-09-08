@@ -47,14 +47,16 @@ Hvor hjalp Agent jer mest?
 
 Et AI-forslag vi fulgte: 
 
- 
+ PrintWriter kan skjule IO-fejl; log eller tjek flush/fejl ved skrivning
 
 Et AI-forslag vi ændrede eller afviste: 
-
+Server blokerer per klient (ingen tråde/poole) — sænk ventetid for samtidige klienter ved at håndtere hver accept i en ny tråd/Executor.
  
 
 Hvorfor? 
+vil gerne være sikker på at kunne fange alle fejl 
 
+vores progam er ikke designet til at skulle have flere clienter der for giver det ikke mening at lave programet om så det passer til flere clienter 
  
 
 ## Test 
