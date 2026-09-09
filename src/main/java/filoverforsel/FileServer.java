@@ -6,7 +6,7 @@ import java.net.Socket;
 
 public class FileServer {
     private static final int PORT = 5000;
-
+    private static final File BASE_DIR = new File(".");
     public static void main(String[] args) {
         FileServer server = new FileServer();
         server.start();
@@ -48,7 +48,13 @@ public class FileServer {
                 return;
             }
 
-            File file = new File(fileName);
+            File baseDir = new File(".").getCanonicalFile();
+            File file = new File(baseDir, fileName).getCanonicalFile();
+            if (!file.getPath().startsWith(baseDir.getPath() + File.separator)) {
+                sendError(output, "Ugyldigt filnavn");
+                return;
+            }
+
             if (!file.exists() || !file.isFile()) {
                 sendError(output, "Filen findes ikke");
                 return;
