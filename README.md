@@ -123,26 +123,32 @@ den var også god til at komme med en forsklaring af hvad Ai ville lave i hvært
  
 
 Vigtigste feedback fra den anden gruppe: 
+opdelening af klasserne metoder der var nem at følge 
+fager ikke en abselut stig af windos 
+men gør det gør det for linux "black list er skrøbelig samliget med at valiger en tilad mappe "
 
- 
-
-Hvad ændrede vi efter reviewet? 
+Hvad ændrede vi efter reviewet?  
+valigering af en fast base derogatory  
 
  
 
 Hvad valgte vi eventuelt ikke at ændre – og hvorfor? 
-
+vi valgte ikke at lave en automatisk test da vi lavet manuel test 
+sletted protocoltest filen 
  
 
 ## Refleksion 
 
  
 
-1. Hvor var AI mest nyttig? 
+1. Hvor var AI mest nyttig?
+   planlægnings delen var nyttig da vi så bare skulle forstå hvad der sker frem for at også at skulle lave 
 
-2. Hvornår skulle I være kritiske over for AI? 
+3. Hvornår skulle I være kritiske over for AI?
+   hele tiden fordi den gerne bare ville gøre det hele på samme tid uden at man kunne få en change til at forstå 
 
-3. Hvordan kontrollerede I, at AI-genereret kode faktisk virkede?
+5. Hvordan kontrollerede I, at AI-genereret kode faktisk virkede?
+efter vær gang den lavet noget kørte vi programmet manuelt den lavet også en test enden det gav os koden vi godkende heller ikke koden før vi hade tested det '
 
 ### Trin 1 - Forstå opgaven
 **Hvad er serverens ansvar?**
