@@ -6,7 +6,7 @@ import java.net.Socket;
 
 public class FileServer {
     private static final int PORT = 5000;
-    private static final File BASE_DIR = new File(".");
+
     public static void main(String[] args) {
         FileServer server = new FileServer();
         server.start();
